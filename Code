@@ -1,0 +1,59 @@
+import random
+import time
+import os
+
+def generate_random_words(word_list, WORD_LEN):
+    selected_words = random.sample(word_list, WORD_LEN)
+    return selected_words
+
+def timer(seconds = 5):
+    for remaining_time in range(seconds, 0, -1):
+        print(f"Time left: {remaining_time} seconds")
+        time.sleep(1)
+        if remaining_time == 1:
+            print("Clearing screen...")
+
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def user_input(selected_words):
+    score = 0
+    user_inputs = set()
+
+    while True:
+        user_word = input("Enter a word: ").capitalize()
+
+        if user_word in selected_words and user_word not in user_inputs:
+            score += 1
+            user_inputs.add(user_word)
+
+        continue_play = input("Do you remember more words? (y/n): ").lower()
+
+        if continue_play in ["n", "no"]:
+            accuracy = (score / len(selected_words)) * 100
+            print(f"Your score is {score}/{len(selected_words)} with an accuracy of {accuracy}%.")
+            print(f"Credits: Made by Shrey")
+            break
+
+def main():
+    words = "Curiosity, Knowledge, Wisdom, Adventure, Journey, Mystery, Exploration, Creativity, Inspiration, Imagination, Challenge, Perseverance, Triumph, Discovery, Innovation, Insight, Experience, Growth, Learning, Understanding, Connection, Empathy, Compassion, Kindness, Generosity, Patience, Determination, Resilience, Strength, Courage, Bravery, Optimism, Hope, Dreams, Aspirations, Ambition, Goals, Success, Achievement, Fulfillment, Happiness, Joy, Celebration, Gratitude, Reflection, Mindfulness, Peace, Tranquility, Harmony"
+    word_list = words.split(", ")
+    WORD_LEN = 15
+
+    selected_words = generate_random_words(word_list, WORD_LEN)
+    print(", ".join(selected_words))
+    timer()
+    clear_screen()
+    user_input(selected_words)
+
+if __name__ == "__main__":
+    print("Welcome to Memory game! You will have 5 seconds to remember as many words as possible. After the 5 seconds you will write the words and know your score.")
+    start = input("Do you want to start? (y/n): ").lower()
+    
+    if start in ["y", "yes"]:
+        clear_screen()
+        main()
+    elif start in ["n", "no"]:
+        clear_screen()
+        print("Credits: Made by Shrey")
+        quit()
